@@ -23,19 +23,78 @@ struct TreeNode {
 
 class Solution {
 public:
-  bool isValidBST(TreeNode *root) { return dfs(root, LONG_MIN, LONG_MAX); }
+  bool isValidBST(TreeNode *root) {
+    return is_bst_helper(root, LONG_MIN, LONG_MAX);
+  }
 
-  bool dfs(TreeNode *root, long long lower, long long upper) {
+  bool is_bst_helper(TreeNode *node, long long lower, long long upper) {
+    if (node == nullptr) {
+      return true;
+    }
+
+    if (node->val <= lower || node->val >= upper) {
+      return false;
+    }
+
+    return is_bst_helper(node->left, lower, node->val) &&
+           is_bst_helper(node->right, node->val, upper);
+  }
+};
+
+/*
+中序遍历是二叉树的一种遍历方式，它先遍历左子树，再遍历根节点，最后遍历右子树。
+而我们二叉搜索树保证了左子树的节点的值均小于根节点的值，根节点的值均小于右子树的值，
+因此中序遍历以后得到的序列一定是升序序列
+*/
+
+#include <stack>
+using namespace std;
+
+class Solution2 {
+public:
+  bool isValidBST(TreeNode *root) {
+    stack<TreeNode *> st;
+    int min = INT_MIN;
+
+    while (!st.empty() || root) {
+      while (root) {
+        st.push(root);
+        root = root->left;
+      }
+
+      root = st.top();
+      st.pop();
+
+      // 如果中序遍历得到的节点的值小于等于前一个 inorder，说明不是二叉搜索树
+      if (root->val <= min) {
+        return false;
+      }
+
+      min = root->val;
+      root = root->right;
+    }
+
+    return true;
+  }
+};
+
+class Solution3 {
+public:
+  long pre{LONG_MIN};
+  bool isValidBST(TreeNode *root) {
     if (root == nullptr) {
       return true;
     }
 
-    if (root->val >= upper || root->val <= lower) {
+    // 访问左子树
+    if (!isValidBST(root->left)) {
       return false;
     }
 
-    // iterate left tree and right tree
-    return dfs(root->left, lower, root->val) &&
-           dfs(root->right, root->val, upper);
+    if (root->val <= pre) {
+      return false;
+    }
+
+    return isValidBST(root->right);
   }
 };
