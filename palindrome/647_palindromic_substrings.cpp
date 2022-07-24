@@ -11,16 +11,14 @@ public:
   int countSubstrings(std::string s) {
     int num = 0;
 
-    int len = s.size();
-
     // 遍历回文中心点
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < s.size(); i++) {
       // j=0,中心是一个点，j=1,中心是两个点
       for (int j = 0; j <= 1; j++) {
         int left = i;
         int right = i + j;
 
-        while (left >= 0 && right < len && s[left--] == s[right++]) {
+        while (left >= 0 && right < s.size() && s[left--] == s[right++]) {
           num++;
         }
       }
