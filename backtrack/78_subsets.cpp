@@ -1,5 +1,9 @@
 #include <vector>
 
+/*
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+*/
 using namespace std;
 
 class Solution {
@@ -8,7 +12,7 @@ public:
 
     vector<vector<int>> res;
     vector<int> temp;
-    backtrack();
+    backtrack(nums, 0, res, temp);
     return res;
   }
 

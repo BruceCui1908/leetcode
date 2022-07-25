@@ -1,6 +1,10 @@
 #include <string>
 #include <vector>
 
+/*
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+*/
 class Solution {
 public:
   std::vector<std::string> generateParenthesis(int n) {
