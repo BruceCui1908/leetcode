@@ -9,7 +9,6 @@ using namespace std;
 class Solution {
 public:
   vector<vector<int>> subsets(vector<int> &nums) {
-
     vector<vector<int>> res;
     vector<int> temp;
     backtrack(nums, 0, res, temp);
