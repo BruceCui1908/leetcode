@@ -1,0 +1,1 @@
+g++ -I ./ AreaVisitor.cpp  main.cpp -o test
